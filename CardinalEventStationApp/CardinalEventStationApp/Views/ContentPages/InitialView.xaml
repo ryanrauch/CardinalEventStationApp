@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:InitialViewBase xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:local="clr-namespace:CardinalEventStationApp.Views.ContentPages"
+                       x:Class="CardinalEventStationApp.Views.ContentPages.InitialView">  
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Response"/>
+            <Label Grid.Row="1" Text="Scanned Unique Identifier"/>
+            <Label Grid.Row="2" Text="{Binding Message}"/>
+        </Grid>
+    </ContentPage.Content>
+</local:InitialViewBase>

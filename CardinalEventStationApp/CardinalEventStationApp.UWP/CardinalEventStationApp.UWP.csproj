@@ -92,11 +92,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DependencyServices\PdcCommands.cs" />
-    <Compile Include="DependencyServices\PiccCommands.cs" />
-    <Compile Include="DependencyServices\PiccResponses.cs" />
-    <Compile Include="DependencyServices\Pn532.cs" />
-    <Compile Include="DependencyServices\Registers.cs" />
+    <Compile Include="DependencyServices\PN532\PdcCommands.cs" />
+    <Compile Include="DependencyServices\PN532\PiccCommands.cs" />
+    <Compile Include="DependencyServices\PN532\PiccResponses.cs" />
+    <Compile Include="DependencyServices\PN532\Pn532.cs" />
+    <Compile Include="DependencyServices\PN532\Registers.cs" />
+    <Compile Include="DependencyServices\RC522\PdcCommands.cs" />
+    <Compile Include="DependencyServices\RC522\PiccCommands.cs" />
+    <Compile Include="DependencyServices\RC522\PiccResponses.cs" />
+    <Compile Include="DependencyServices\RC522\RC522.cs" />
+    <Compile Include="DependencyServices\RC522\Registers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

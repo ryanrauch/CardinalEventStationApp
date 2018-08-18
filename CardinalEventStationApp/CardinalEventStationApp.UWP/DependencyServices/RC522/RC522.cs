@@ -1,5 +1,5 @@
 ﻿using CardinalEventStationApp.Services.Interfaces;
-using CardinalEventStationApp.UWP.DependencyServices;
+using CardinalEventStationApp.UWP.DependencyServices.RC522;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,36 +10,31 @@ using Windows.Devices.Gpio;
 using Windows.Devices.Spi;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(Pn532))]
-namespace CardinalEventStationApp.UWP.DependencyServices
+[assembly: Dependency(typeof(RC522))]
+namespace CardinalEventStationApp.UWP.DependencyServices.RC522
 {
-    public class Pn532 : INFCReader
+    public class RC522 : INFCReader
     {
-        public Pn532()
-        {
-            //pn532_packetbuffer = new byte[64];
-        }
         public SpiDevice _spi { get; private set; }
-        //public GpioController IoController { get; private set; }
-        //public GpioPin _resetPowerDown { get; private set; }
+        public GpioController IoController { get; private set; }
+        public GpioPin _resetPowerDown { get; private set; }
 
+        //https--://stackoverflow.com/questions/34284498/rfid-rc522-raspberry-pi-2-windows-iot
         /* Uncomment for Raspberry Pi 2 */
         private const string SPI_CONTROLLER_NAME = "SPI0";
         private const Int32 SPI_CHIP_SELECT_LINE = 0;
-        //private const Int32 RESET_PIN = 25;
-
-        //private byte[] pn532_packetbuffer;
+        private const Int32 RESET_PIN = 25;
 
         public async Task InitIO()
         {
 
             try
             {
-                //IoController = GpioController.GetDefault();
+                IoController = GpioController.GetDefault();
 
-                //_resetPowerDown = IoController.OpenPin(RESET_PIN);
-                //_resetPowerDown.Write(GpioPinValue.High);
-                //_resetPowerDown.SetDriveMode(GpioPinDriveMode.Output);
+                _resetPowerDown = IoController.OpenPin(RESET_PIN);
+                _resetPowerDown.Write(GpioPinValue.High);
+                _resetPowerDown.SetDriveMode(GpioPinDriveMode.Output);
             }
             /* If initialization fails, throw an exception */
             catch (Exception ex)
@@ -65,31 +60,16 @@ namespace CardinalEventStationApp.UWP.DependencyServices
                 throw new Exception("SPI Initialization Failed", ex);
             }
 
-            //Reset();
-            //var firmwareVersionCommand = new byte[] { 0x02 };
 
-            
-            //pn532_packetbuffer[0] = 0x02;
-            //_spi.Write(pn532_packetbuffer);
-
-            //pn532_packetbuffer[0] = 0x02;
-            //_spi.Write(pn532_packetbuffer);
-            //_spi.Read(pn532_packetbuffer);
-
-
-            //var firmwareVersionResponse = new byte[12];
-            //_spi.Read(firmwareVersionResponse);
-            //_spi.TransferSequential(firmwareVersionCommand, firmwareVersionResponse);
-            
-            //readPassiveTargetId();
+            Reset();
         }
 
         public void Reset()
         {
-            //_resetPowerDown.Write(GpioPinValue.Low);
-            //System.Threading.Tasks.Task.Delay(50).Wait();
-            //_resetPowerDown.Write(GpioPinValue.High);
-            //System.Threading.Tasks.Task.Delay(50).Wait();
+            _resetPowerDown.Write(GpioPinValue.Low);
+            System.Threading.Tasks.Task.Delay(50).Wait();
+            _resetPowerDown.Write(GpioPinValue.High);
+            System.Threading.Tasks.Task.Delay(50).Wait();
 
             // Force 100% ASK modulation
             WriteRegister(Registers.TxAsk, 0x40);
@@ -320,18 +300,6 @@ namespace CardinalEventStationApp.UWP.DependencyServices
             _spi.TransferFullDuplex(writeBuffer, readBuffer);
 
             return readBuffer;
-        }
-
-        private void readPassiveTargetId()
-        {
-            //ryan test
-            var writeCommand = new Byte[] { 0x4A, 0x01, 0x00 };
-
-            var response = TransferSpi(writeCommand);
-            if(response[0] > 0)
-            {
-                string res = "response value";
-            }
         }
     }
 }

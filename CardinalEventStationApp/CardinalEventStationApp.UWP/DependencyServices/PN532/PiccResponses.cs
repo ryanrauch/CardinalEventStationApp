@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CardinalEventStationApp.UWP.DependencyServices
+namespace CardinalEventStationApp.UWP.DependencyServices.PN532
 {
     public static class PiccResponses
     {

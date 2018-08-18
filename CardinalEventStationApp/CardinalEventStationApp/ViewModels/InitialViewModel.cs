@@ -42,7 +42,12 @@ namespace CardinalEventStationApp.ViewModels
                     if(present)
                     {
                         var u = _nfcReader.ReadUid();
-                        Message = u.FullUid.ToString();
+                        string tmp = string.Empty;
+                        foreach(var b in u.FullUid)
+                        {
+                            tmp += b.ToString();
+                        }
+                        Message = tmp;
                     }
                     await Task.Delay(1000);
                 }

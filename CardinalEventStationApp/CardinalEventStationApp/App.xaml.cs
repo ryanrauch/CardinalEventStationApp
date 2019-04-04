@@ -15,7 +15,8 @@ namespace CardinalEventStationApp
 		{
 			InitializeComponent();
             Container = AutoFacContainerBuilder.CreateContainer();
-            MainPage = new InitialView();
+            //MainPage = new InitialView();
+            MainPage = new MobileNFCView();
 		}
 
 		protected override void OnStart ()

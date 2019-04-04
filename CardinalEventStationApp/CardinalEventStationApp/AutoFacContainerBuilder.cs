@@ -15,6 +15,7 @@ namespace CardinalEventStationApp
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<InitialViewModel>().SingleInstance();
+            containerBuilder.RegisterType<MobileNFCViewModel>().SingleInstance();
             //containerBuilder.RegisterType<LoginViewModel>().SingleInstance();
             //containerBuilder.RegisterType<InventoryViewModel>().SingleInstance();
             //containerBuilder.RegisterType<InventoryCompletedViewModel>().SingleInstance();
@@ -28,7 +29,9 @@ namespace CardinalEventStationApp
             containerBuilder.RegisterType<SinglePageNavigationService>().As<INavigationService>().SingleInstance();
 
             //containerBuilder.RegisterInstance(DependencyService.Get<IWatchSessionManager>()).AsImplementedInterfaces().SingleInstance();
-            containerBuilder.RegisterInstance(DependencyService.Get<INFCReader>()).AsImplementedInterfaces().SingleInstance();
+
+            // must uncomment below line to get RC522 RFID reader to work on UWP
+            //containerBuilder.RegisterInstance(DependencyService.Get<INFCReader>()).AsImplementedInterfaces().SingleInstance();
             return containerBuilder.Build();
         }
     }
